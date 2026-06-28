@@ -729,9 +729,9 @@ const PHASE_META = [
 export default function App() {
   const [view, setView] = useState("semaines"); // semaines | conseils
   const [activePhase, setActivePhase] = useState(1);
-  const [activeSemaine, setActiveSemaine] = useState(null);
-  const [activeJour, setActiveJour] = useState(null);
-  const [expandedBloc, setExpandedBloc] = useState(null);
+  const [activeSemaine, setActiveSemaine] = useState<number | null>(null);
+  const [activeJour, setActiveJour] = useState<string | null>(null);
+  const [expandedBloc, setExpandedBloc] = useState<number | null>(null);
 
   const semaines = SEMAINES.filter(s => s.phase === activePhase);
   const semaine = activeSemaine !== null ? SEMAINES.find(s => s.num === activeSemaine) as any : null;
@@ -745,7 +745,7 @@ export default function App() {
       <div style={{ fontFamily: "'Segoe UI', system-ui, sans-serif", background: "#0F0F13", minHeight: "100vh", color: "#F0EDE8", maxWidth: 480, margin: "0 auto", paddingBottom: 40 }}>
         <div style={{ padding: "20px 16px 12px", background: "#1A1A22", position: "sticky", top: 0, zIndex: 10, borderBottom: "1px solid #2A2A35" }}>
           <button onClick={() => { setActiveJour(null); }} style={{ background: "none", border: "none", color: "#888", fontSize: 13, cursor: "pointer", padding: 0, marginBottom: 8 }}>← Retour semaine {activeSemaine}</button>
-          <div style={{ fontSize: 11, color: tc, textTransform: "uppercase", letterSpacing: 2, marginBottom: 2 }}>{JOUR_LABEL[activeJour]} · S{activeSemaine} · {TYPE_LABEL[jourData.type]}</div>
+          <div style={{ fontSize: 11, color: tc, textTransform: "uppercase", letterSpacing: 2, marginBottom: 2 }}>{JOUR_LABEL[activeJour!]} · S{activeSemaine} · {TYPE_LABEL[jourData.type]}</div>
           <div style={{ fontSize: 18, fontWeight: 800 }}>{jourData.label}</div>
           {jourData.duree && <div style={{ fontSize: 12, color: "#888", marginTop: 2 }}>⏱ {jourData.duree}</div>}
         </div>
