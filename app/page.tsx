@@ -713,10 +713,10 @@ const SEMAINES = [
 // ─── UTILS ───────────────────────────────────────────────────────────────────
 
 const JOUR_ORDER = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"];
-const JOUR_LABEL = { lundi: "Lundi", mardi: "Mardi", mercredi: "Mercredi", jeudi: "Jeudi", vendredi: "Vendredi" };
+const JOUR_LABEL: Record<string, string> = { lundi: "Lundi", mardi: "Mardi", mercredi: "Mercredi", jeudi: "Jeudi", vendredi: "Vendredi" };
 const TYPE_COLOR: Record<string, string> = { halte: "#C77DFF", course: "#52B788" };
-const TYPE_ICON = { halte: "🏋️", course: "🏃" };
-const TYPE_LABEL = { halte: "Haltérophilie", course: "Course à pied" };
+const TYPE_ICON: Record<string, string> = { halte: "🏋️", course: "🏃" };
+const TYPE_LABEL: Record<string, string> = { halte: "Haltérophilie", course: "Course à pied" };
 
 const PHASE_META = [
   { id: 1, label: "Phase 1", dates: "Fin juin → Fin juillet", color: "#2D6A4F", accent: "#52B788", theme: "Technique & bases" },
@@ -734,8 +734,8 @@ export default function App() {
   const [expandedBloc, setExpandedBloc] = useState(null);
 
   const semaines = SEMAINES.filter(s => s.phase === activePhase);
-  const semaine = activeSemaine !== null ? SEMAINES.find(s => s.num === activeSemaine) : null;
-  const jourData = semaine && activeJour ? semaine[activeJour] : null;
+  const semaine = activeSemaine !== null ? SEMAINES.find(s => s.num === activeSemaine) as any : null;
+  const jourData = semaine && activeJour ? (semaine as any)[activeJour] : null;
   const pm = PHASE_META.find(p => p.id === activePhase);
 
   // ── Vue détail jour ──────────────────────────────────────────────────────
@@ -841,7 +841,7 @@ export default function App() {
           <div style={{ fontSize: 12, color: "#888", marginBottom: 8 }}>{pm.dates}</div>
           {semaines.map(s => {
             const badge = s.decharge ? "⚡ Décharge" : s.tapering ? "⚡ Tapering" : s.raceWeek ? "🏁 Race Week" : null;
-            const jours = JOUR_ORDER.filter(j => s[j]);
+            const jours = JOUR_ORDER.filter(j => (s as any)[j]);
             return (
               <div key={s.num} onClick={() => setActiveSemaine(s.num)} style={{ background: "#1A1A22", borderRadius: 14, padding: "14px 16px", marginBottom: 10, cursor: "pointer", border: "1px solid #2A2A35", transition: "all 0.15s" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
