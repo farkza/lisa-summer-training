@@ -714,7 +714,7 @@ const SEMAINES = [
 
 const JOUR_ORDER = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"];
 const JOUR_LABEL = { lundi: "Lundi", mardi: "Mardi", mercredi: "Mercredi", jeudi: "Jeudi", vendredi: "Vendredi" };
-const TYPE_COLOR = { halte: "#C77DFF", course: "#52B788" };
+const TYPE_COLOR: Record<string, string> = { halte: "#C77DFF", course: "#52B788" };
 const TYPE_ICON = { halte: "🏋️", course: "🏃" };
 const TYPE_LABEL = { halte: "Haltérophilie", course: "Course à pied" };
 
