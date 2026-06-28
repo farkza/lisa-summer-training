@@ -2,7 +2,22 @@
 
 import { useState } from "react";
 
-// ─── DONNÉES ────────────────────────────────────────────────────────────────
+// ─── TYPES ───────────────────────────────────────────────────────────────────
+
+type Bloc = { titre: string; duree: string; contenu: string };
+type Jour = { type: string; label: string; duree: string; blocs: Bloc[] };
+type Semaine = {
+  num: number;
+  phase: number;
+  decharge?: boolean;
+  tapering?: boolean;
+  raceWeek?: boolean;
+  lundi?: Jour;
+  mardi?: Jour;
+  mercredi?: Jour;
+  jeudi?: Jour;
+  vendredi?: Jour;
+};
 
 const SEMAINES = [
   // ── PHASE 1 ──────────────────────────────────────────────────────────────
@@ -750,7 +765,7 @@ export default function App() {
           {jourData.duree && <div style={{ fontSize: 12, color: "#888", marginTop: 2 }}>⏱ {jourData.duree}</div>}
         </div>
         <div style={{ padding: "16px" }}>
-          {jourData.blocs.map((bloc, i) => {
+          {jourData.blocs.map((bloc: Bloc, i: number) => {
             const open = expandedBloc === i;
             return (
               <div key={i} onClick={() => setExpandedBloc(open ? null : i)} style={{ background: "#1A1A22", borderRadius: 14, padding: "14px 16px", marginBottom: 10, cursor: "pointer", border: open ? `1px solid ${tc}44` : "1px solid transparent", transition: "all 0.2s" }}>
@@ -838,7 +853,7 @@ export default function App() {
               </button>
             ))}
           </div>
-          <div style={{ fontSize: 12, color: "#888", marginBottom: 8 }}>{pm.dates}</div>
+          <div style={{ fontSize: 12, color: "#888", marginBottom: 8 }}>{pm?.dates}</div>
           {semaines.map(s => {
             const badge = s.decharge ? "⚡ Décharge" : s.tapering ? "⚡ Tapering" : s.raceWeek ? "🏁 Race Week" : null;
             const jours = JOUR_ORDER.filter(j => (s as any)[j]);
@@ -853,8 +868,8 @@ export default function App() {
                 </div>
                 <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                   {jours.map(j => (
-                    <div key={j} style={{ fontSize: 11, color: TYPE_COLOR[s[j].type], background: `${TYPE_COLOR[s[j].type]}18`, padding: "3px 8px", borderRadius: 20, fontWeight: 600 }}>
-                      {JOUR_LABEL[j].slice(0,3)} · {s[j].type === "halte" ? "🏋️" : "🏃"}
+                    <div key={j} style={{ fontSize: 11, color: TYPE_COLOR[(s as any)[j]?.type ?? ""], background: `${TYPE_COLOR[(s as any)[j]?.type ?? ""]}18`, padding: "3px 8px", borderRadius: 20, fontWeight: 600 }}>
+                      {JOUR_LABEL[j].slice(0,3)} · {(s as any)[j]?.type === "halte" ? "🏋️" : "🏃"}
                     </div>
                   ))}
                 </div>
